@@ -19,9 +19,9 @@ email"""
 class Group(models.Model):
 
     name = models.CharField(max_length=255)
-    Teacher = models.ManyToManyField("journal.Teacher")
+    #teacher = models.ManyToManyField("journal.Teacher")
     def __str__(self):
-        return self.name
+        return f"{self.name} "
 
 
 class Teacher(models.Model):
@@ -29,9 +29,9 @@ class Teacher(models.Model):
     age = models.PositiveSmallIntegerField()
     email = models.CharField(max_length=255)
     dummy = models.BooleanField(default=False)
-
+    groups = models.ManyToManyField("journal.Group", blank=True )
     def __str__(self):
-        return self.name
+        return f"{self.name} {self.age} "
 
 class Student(models.Model):
     name = models.CharField(max_length=255)
@@ -40,4 +40,4 @@ class Student(models.Model):
     group = models.ForeignKey("journal.Group", on_delete=models.SET_NULL, null=True)
     dummy = models.BooleanField(default=False)
     def __str__(self):
-        return self.name
+        return f"{self.name} {self.age} {self.group}"
