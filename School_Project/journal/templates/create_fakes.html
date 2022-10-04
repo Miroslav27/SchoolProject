@@ -1,0 +1,49 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Title</title>
+</head>
+<body>
+    <form method="post" action="add-fake-students">{% csrf_token %}
+
+    <h2>To create a new Student:</h2>
+        Input Amount of new fake students(1-99): <input type="number" name="number",min="1" max="99" >
+        <button type="submit" name= "submit_button" value="student">Add students</button>
+    </form>
+    <form method="post" action="add-fake-teachers">{% csrf_token %}
+    <h2>To create a new Teacher:</h2>
+        Input Amount of new fake teachers(1-99): <input type="number" name="number",min="1" max="99" >
+        <button type="submit" name= "submit_button" value="teacher">Add teachers</button>
+            </select>
+    </form>
+    <form method="post" action="delete-dummies">{% csrf_token %}
+    <button type="submit" name= "submit_button" value="delete">Delete All Dummies</button>
+    </form>
+
+    <h3>Students list:</h3>
+
+  <div>
+    <span id="ss_elem" class="Students">
+      Students:
+    </span>
+    <ul>
+        {%for student in students %}
+        <li id="student.id" role="option">{{student.name}}</li>
+        {% endfor %}
+    </ul>
+  </div>
+<div>
+    <span id="tt_elem" class="Teachers">
+      Teachers:
+    </span>
+    <ul>
+        {%for teacher in teachers %}
+        <li id="teacher.id" role="option">{{teacher.name}}</li>
+        {% endfor %}
+    </ul>
+  </div>
+
+
+</body>
+</html>
