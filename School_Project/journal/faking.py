@@ -27,6 +27,8 @@ def add_fake_teacher(quantity = 1):
 
         print(f"fake {i+1} is ready!")
 
+def add_fake_course():
+    pass
 def delete_all_fakes():
     Teacher.objects.filter(dummy=True).delete()
     Student.objects.filter(dummy=True).delete()
