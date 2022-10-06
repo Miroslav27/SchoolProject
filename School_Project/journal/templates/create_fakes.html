@@ -17,6 +17,12 @@
         <button type="submit" name= "submit_button" value="teacher">Add teachers</button>
             </select>
     </form>
+    <form method="post" action="add-fake-courses">{% csrf_token %}
+    <h2>To create a new Course:</h2>
+        Input Amount of new fake courses(1-99): <input type="number" name="number",min="1" max="99" >
+        <button type="submit" name= "submit_button" value="course">Add Courses</button>
+            </select>
+    </form>
     <form method="post" action="delete-dummies">{% csrf_token %}
     <button type="submit" name= "submit_button" value="delete">Delete All Dummies</button>
     </form>
@@ -43,7 +49,16 @@
         {% endfor %}
     </ul>
   </div>
-
+<div>
+    <span id="tt_elem" class="Teachers">
+      Courses:
+    </span>
+    <ul>
+        {%for course in courses %}
+        <li id="course.id" role="option">{{course.name}}</li>
+        {% endfor %}
+    </ul>
+  </div>
 
 </body>
 </html>

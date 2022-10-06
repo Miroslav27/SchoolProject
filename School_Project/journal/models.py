@@ -39,8 +39,8 @@ class Course(models.Model):
     category = models.ForeignKey("journal.CourseCategory",on_delete=models.SET_NULL,null=True)
     description = models.TextField()
     teacher = models.ForeignKey("journal.Teacher",on_delete=models.SET_NULL,null=True)
-    tag = models.ManyToManyField("journal.Tag",blank=True)
-
+    tags = models.ManyToManyField("journal.Tag",blank=True)
+    dummy = models.BooleanField(default=False)
     def __str__(self):
         return f"{self.name}: {self.category.name} ({self.teacher.name})"
 class Tag(models.Model):
