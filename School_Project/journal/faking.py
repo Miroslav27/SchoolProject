@@ -31,17 +31,26 @@ def add_fake_course(quantity = 1):
     for _ in range(quantity):
         fake_desc = lorem.paragraphs(2)
         fake_name = lorem.words(3).capitalize()
-        #fake_tag = random.choice(Tag.objects.all())
+
         fake_course = Course(name=fake_name,category=random.choice(CourseCategory.objects.all()),
                              description=fake_desc,teacher=random.choice(Teacher.objects.all()),
                              dummy=True
                              )
         fake_course.save()
+        fake_course.tags.add(random.choice(Tag.objects.all()))
         #fake_course.tags.set(fake_tag)
         print(f"fake {_ + 1} is ready!")
 
-def delete_all_fakes():
+def add_fake_tags(quantity = 1):
+    for _ in range(quantity):
+        fake_tag = lorem.words(1)
+        #fake_tag = random.choice(Tag.objects.all())
+        fake_tag = Tag(name=fake_tag,dummy=True)
+        fake_tag.save()
+        #fake_course.tags.set(fake_tag)
+def delete_all_fakes(quantity = 0):
     Teacher.objects.filter(dummy=True).delete()
     Student.objects.filter(dummy=True).delete()
     Course.objects.filter(dummy=True).delete()
+    Tag.objects.filter(dummy=True).delete()
     print("Dummies been erased!")

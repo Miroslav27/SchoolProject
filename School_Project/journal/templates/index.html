@@ -8,7 +8,7 @@
 <body>
 <nav class="navbar navbar-expand-lg navbar-dark bg-primary">
   <div class="container-fluid">
-    <a class="navbar-brand" href="#">Navbar</a>
+    <a class="navbar-brand" href="/create_fakes">+</a>
     <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarSupportedContent" aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
       <span class="navbar-toggler-icon"></span>
     </button>
@@ -17,47 +17,78 @@
         <li class="nav-item">
           <a class="nav-link active" aria-current="page" href="#">Home</a>
         </li>
-        <li class="nav-item">
-          <a class="nav-link" href="#">Link</a>
-        </li>
         <li class="nav-item dropdown">
           <a class="nav-link dropdown-toggle" href="#" id="navbarDropdown" role="button" data-bs-toggle="dropdown" aria-expanded="false">
-            Dropdown
+            Напрямки
           </a>
           <ul class="dropdown-menu" aria-labelledby="navbarDropdown">
-            <li><a class="dropdown-item" href="#">Action</a></li>
-            <li><a class="dropdown-item" href="#">Another action</a></li>
+            {% for category in course_categories %}
+            <li><a class="dropdown-item" href="#">{{category}}</a></li>
+            {% endfor %}
             <li><hr class="dropdown-divider"></li>
-            <li><a class="dropdown-item" href="#">Something else here</a></li>
+
           </ul>
         </li>
-        <li class="nav-item">
-          <a class="nav-link disabled" href="#" tabindex="-1" aria-disabled="true">Disabled</a>
-        </li>
       </ul>
-      <form class="d-flex">
-        <input class="form-control me-2" type="search" placeholder="Search" aria-label="Search">
-        <button class="btn btn-outline-success" type="submit">Search</button>
-      </form>
     </div>
   </div>
 </nav>
 
-<h1>"OLA AMIGOS!"</h1>
-<div class="row">
-  {%for course in courses%}
-  <div class="col-sm-6">
-    <div class="card">
-      <div class="card-body">
+<h1 align="center">"OLA AMIGOS!"</h1>
+<div class="row justify-content-center align-items-center  ">
+  {%for course in object_list %}
+  <div class="w-auto p-2 "  >
+    <div class="card" style="width: 24rem;">
+      <div class="card-body" >
         <h5 class="card-title">{{course.name}}</h5>
-        <p class="card-text">{{course.description}}</p>
-        <a href="#" class="btn btn-primary">Go somewhere</a>
+        <h6 class="card-subtitle mb-2 text-muted">Викладає <a class="card-subtitle mb-2 text-muted" href="#">{{course.teacher.name}}</a>
+        </h6>
+        <span class="d-inline-block text-truncate" style="max-width: 250px;">
+          {{course.description}}
+        </span>
+        <p>
+          {%for tag in course.tags.all%}
+          <a href="#">
+            #{{tag}}</a>
+            {% if not forloop.last%},{% endif%}
+
+          {%endfor%}
+        </p>
+        <a href="#" class="btn btn-primary">Записатись!</a>
       </div>
     </div>
   </div>
   {%endfor%}
 </div>
 
+
+<nav aria-label="...">
+  <ul class="pagination justify-content-center">
+      {% if page_obj.has_previous %}
+      <li class="page-item">
+      <a class="page-link" href="?page={{ page_obj.previous_page_number }}">previous</a>
+          {% else %}
+      <li class="page-item disabled">
+          <span class="page-link">Previous</span>
+
+      {% endif %}
+      </li>
+
+    <li class="page-item active" aria-current="page">
+      <span class="page-link"> {{page_obj.number}}</span>
+    </li>
+
+      {% if page_obj.has_next %}
+    <li class="page-item">
+      <a class="page-link" href="?page={{ page_obj.next_page_number }}">Next</a>
+    </li>
+      {% else %}
+      <li class="page-item disabled">
+      <span class="page-link color: grey">Next</span>
+      </li>
+      {% endif %}
+  </ul>
+</nav>
 
 <script src="https://cdn.jsdelivr.net/npm/@popperjs/core@2.11.6/dist/umd/popper.min.js" integrity="sha384-oBqDVmMz9ATKxIep9tiCxS/Z9fNfEXiDAYTujMAeBAsjFuCZSmKbSSUnQlmh/jp3" crossorigin="anonymous"></script>
 <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.2.2/dist/js/bootstrap.min.js" integrity="sha384-IDwe1+LCz02ROU9k972gdyvl+AESN10+x7tBKgc9I5HFtuNz0wWnPclzo6p9vxnk" crossorigin="anonymous"></script>

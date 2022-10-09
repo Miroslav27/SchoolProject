@@ -22,9 +22,6 @@ urlpatterns = [
     path('', views.IndexView.as_view()),
     #path('', views.SomeView.as_view()),
     path('create_fakes/', views.CreateFakesView.as_view()),
-    path('create_fakes/add-fake-students', views.FakeStudentsForm.as_view()),
-    path('create_fakes/add-fake-teachers', views.FakeTeachersForm.as_view()),
-    path('create_fakes/delete-dummies', views.DeleteDummiesForm.as_view()),
-    path('create_fakes/add-fake-courses',views.FakeCourseForm.as_view()),
+
     path('__debug__/', include('debug_toolbar.urls')),
               ]
