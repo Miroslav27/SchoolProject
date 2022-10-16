@@ -19,7 +19,7 @@ class StudentCreateForm(forms.Form):
         surname=self.cleaned_data["surname"]
         if " " in surname:
             raise forms.ValidationError(" Пробіли не допускаються,")
-        if surname.lower() in [x.surname.lower() for x in Student.objects.all()]:
+        if surname in Student.objects.all(surname=surname):
             raise forms.ValidationError(" Студент з таким призвіщем вже існує, спробуйте щось інше ")
         return surname
 
@@ -42,7 +42,7 @@ class CourseCreateForm(forms.Form):
 
     def clean_name(self):
         name=self.cleaned_data["name"]
-        if name in [x.name for x in Course.objects.all()]:
+        if name in Course.objects.all(name=name):
             raise forms.ValidationError("Така назва курсу вже існує")
         return name
     def create_course(self):
