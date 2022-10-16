@@ -31,47 +31,23 @@
         <input type="hidden" name="number", value="1" >
     </form>
 
-    <h3>Students list:</h3>
+    <h6> Students ammount: {{students}} </h6>
 
-  <div>
-    <span id="ss_elem" class="Students">
-      Students:
-    </span>
-    <ul>
-        {%for student in students %}
-        <li id="student.id" role="option">{{student.firstname}} {{student.surname}}</li>
-        {% endfor %}
-    </ul>
-  </div>
 <div>
     <span id="tt_elem2" class="Teachers">
-      Teachers:
+      Teachers ammount: {{teachers}}
     </span>
-    <ul>
-        {%for teacher in teachers %}
-        <li id="teacher.id" role="option">{{teacher.title}} {{teacher.firstname}} {{teacher.surname}}</li>
-        {% endfor %}
-    </ul>
-  </div>
+
+</div>
 <div>
     <span id="tt_elem3" class="Courses">
-      Courses:
+      Courses ammount: {{courses}}
     </span>
-    <ul>
-        {%for course in courses %}
-        <li id="course.id" role="option">{{course.name}}</li>
-        {% endfor %}
-    </ul>
   </div>
 <div>
     <span id="tt_elem4" class="Tags">
-      Tags:
+      Tags ammount: {{tags}}
     </span>
-    <ul>
-        {%for tag in tags %}
-        <li id="tag.id" role="option">{{tag.name}}</li>
-        {% endfor %}
-    </ul>
   </div>
 {%include "Footer.html"%}
 </body>
