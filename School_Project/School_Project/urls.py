@@ -20,8 +20,8 @@ from journal import views
 urlpatterns = [
     path('admin/', admin.site.urls),
     path('', views.IndexView.as_view()),
-    #path('', views.SomeView.as_view()),
+    path('create_student/', views.StudentCreateView.as_view()),
     path('create_fakes/', views.CreateFakesView.as_view()),
-
+    path('create_course/',views.CourseCreateView.as_view()),
     path('__debug__/', include('debug_toolbar.urls')),
               ]

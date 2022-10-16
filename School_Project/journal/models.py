@@ -12,22 +12,25 @@ class Group(models.Model):
 
 
 class Teacher(models.Model):
-    name = models.CharField(max_length=255)
+    firstname = models.CharField(max_length=255)
+    surname = models.CharField(max_length=255)
+    title = models.CharField(max_length=255)
     age = models.PositiveSmallIntegerField()
     email = models.CharField(max_length=255)
     dummy = models.BooleanField(default=False)
     groups = models.ManyToManyField("journal.Group", blank=True )
     def __str__(self):
-        return f"{self.name} {self.age} "
+        return f"{self.title} {self.firstname} {self.surname} "
 
 class Student(models.Model):
-    name = models.CharField(max_length=255)
+    firstname = models.CharField(max_length=255)
+    surname = models.CharField(max_length=255)
     age = models.PositiveSmallIntegerField()
     email = models.CharField(max_length=255)
     group = models.ForeignKey("journal.Group", on_delete=models.SET_NULL, null=True)
     dummy = models.BooleanField(default=False)
     def __str__(self):
-        return f"{self.name} {self.age} {self.group}"
+        return f"{self.firstname} {self.surname} {self.age} {self.group}"
 
 class CourseCategory(models.Model):
     name = models.CharField(max_length=255)
@@ -42,7 +45,7 @@ class Course(models.Model):
     tags = models.ManyToManyField("journal.Tag",blank=True)
     dummy = models.BooleanField(default=False)
     def __str__(self):
-        return f"{self.name}: {self.category.name} ({self.teacher.name})"
+        return f"{self.name}: {self.category.name} ({self.teacher.surname})"
 class Tag(models.Model):
     name = models.CharField(max_length=255)
     dummy = models.BooleanField(default=False)
