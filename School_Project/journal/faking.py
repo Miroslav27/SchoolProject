@@ -5,14 +5,20 @@ from lorem_text import lorem
 def add_fake_student(quantity = 1):
     fake=faker.Faker()
     for i in range(quantity):
-        fake_name,fake_surname = fake.name().split()
-        fake_email = f"{fake_name.lower().replace(' ','.')}@{fake.domain_name()}"
-        fake_age = random.randint(16, random.randint(16, 99))
-        fake_group = random.choice(Group.objects.all())
-        fake_student=Student(firstname=fake_name,surname=fake_surname, email=fake_email, age=fake_age, group=fake_group, dummy=True)
-        fake_student.save()
-        print(f"fake {i+1} is ready!")
+        try:
+            fake_name,fake_surname = fake.name().split()
+            fake_email = f"{fake_name.lower().replace(' ','.')}@{fake.domain_name()}"
+            fake_age = random.randint(16, random.randint(16, 99))
+            fake_group = random.choice(Group.objects.all())
+            fake_student=Student(firstname=fake_name,surname=fake_surname, email=fake_email, age=fake_age, group=fake_group, dummy=True)
 
+            fake_student.save()
+
+            fake_student.course.add(random.choice(Course.objects.all()))
+            fake_student.course.add(random.choice(Course.objects.all()))
+            print(f"fake {i+1} is ready!")
+        except:
+            continue
 def add_fake_teacher(quantity = 1):
     fake=faker.Faker()
     rank=["Doc.","Proff","Sir",]

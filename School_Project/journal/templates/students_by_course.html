@@ -1,0 +1,47 @@
+
+{%include "NavBar.html"%}
+<h1 align="center">"Student List"</h1>
+<div class="list-group">
+  {%for student in object_list %}
+  <a href={% url "student_edit" student_id=student.id%} class="list-group-item list-group-item-action" aria-current="true">
+    <div class="d-flex w-100 justify-content-between">
+      <h5 class="mb-1">{{student.firstname}} {{student.surname}}</h5>
+      <small>Перейти</small>
+    </div>
+    <p class="mb-1">{{student.age}}</p>
+    <small>{{student.email}}</small>
+  </a>
+  {%endfor%}
+</div>
+
+
+<nav aria-label="...">
+  <ul class="pagination justify-content-center">
+      {% if page_obj.has_previous %}
+      <li class="page-item">
+      <a class="page-link" href="?page={{ page_obj.previous_page_number }}">previous</a>
+          {% else %}
+      <li class="page-item disabled">
+          <span class="page-link">Previous</span>
+
+      {% endif %}
+      </li>
+
+    <li class="page-item active" aria-current="page">
+      <span class="page-link"> {{page_obj.number}}</span>
+    </li>
+
+      {% if page_obj.has_next %}
+    <li class="page-item">
+      <a class="page-link" href="?page={{ page_obj.next_page_number }}">Next</a>
+    </li>
+      {% else %}
+      <li class="page-item disabled">
+      <span class="page-link color: grey">Next</span>
+      </li>
+      {% endif %}
+  </ul>
+</nav>
+{%include "Footer.html"%}
+</body>
+</html>
