@@ -1,5 +1,6 @@
-{%include "NavBar.html"%}
-<body>
+{%extends "Base.html"%}
+
+{% block content%}
     <div class="container">
         <br>
             <form action="." method="post"> {%csrf_token%}
@@ -14,6 +15,5 @@
             </form>
         {{success_mes}}
     </div>
-{%include "Footer.html"%}
-</body>
-</html>
+
+{% endblock content%}
