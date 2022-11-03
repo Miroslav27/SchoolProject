@@ -14,14 +14,21 @@ Including another URLconf
     2. Add a URL to urlpatterns:  path('blog/', include('blog.urls'))
 """
 from django.contrib import admin
+from django.contrib.auth.views import LoginView, LogoutView
 from django.urls import path, include
 from django.http import request
 from journal import views
 urlpatterns = [
     path('admin/', admin.site.urls),
-    path('', views.IndexView.as_view()),
-    path('create_student/', views.StudentCreateView.as_view()),
-    path('create_fakes/', views.CreateFakesView.as_view()),
-    path('create_course/',views.CourseCreateView.as_view()),
+    path('login/',LoginView.as_view(template_name="login.html"),name="login"),
+    path('logout/',LogoutView.as_view(),name="logout"),
+    path('', views.IndexView.as_view(), name="home"),
+    path('courses_by_cat/<int:category_id>/', views.CourseByCategoryView.as_view(), name="courses_by_cat"),
+    path('create_student/', views.StudentCreateView.as_view(), name="student_create"),
+    path('student/<int:student_id>/edit/',views.StudentEditView.as_view(), name="student_edit"),
+    path('students_by_course/<int:course_id>/', views.StudentByCourseView.as_view(), name="students_by_course"),
+    path('create_fakes/', views.CreateFakesView.as_view(),name="create_fakes"),
+    path('create_course/',views.CourseCreateView.as_view(), name="course_create"),
+    path('course/<int:course_id>/edit/',views.CourseEditView.as_view(), name="course_edit"),
     path('__debug__/', include('debug_toolbar.urls')),
               ]

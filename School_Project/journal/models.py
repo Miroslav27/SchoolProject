@@ -28,6 +28,7 @@ class Student(models.Model):
     age = models.PositiveSmallIntegerField(validators=[MinValueValidator(18)])
     email = models.CharField(max_length=255, validators=[EmailValidator()], unique=True)
     group = models.ForeignKey("journal.Group", on_delete=models.SET_NULL, null=True)
+    course = models.ManyToManyField("journal.Course", blank=True)
     dummy = models.BooleanField(default=False)
     def __str__(self):
         return f"{self.firstname} {self.surname} {self.age} {self.group}"

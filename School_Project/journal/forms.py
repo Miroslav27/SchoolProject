@@ -1,4 +1,6 @@
 from django import forms
+from django.contrib.auth.models import User
+
 from journal.models import Group,Student,CourseCategory, Tag,Teacher,Course
 from django.core.validators import MinValueValidator
 
@@ -13,4 +15,3 @@ class CourseCreateForm(forms.ModelForm):
     class Meta:
         model = Course
         exclude = {"dummy"}
-
