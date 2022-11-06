@@ -1,5 +1,6 @@
+{%extends "Base.html"%}
 
-{%include "NavBar.html"%}
+{% block content%}
 <body>
 <a href="/">Index >>></a>
     <form method="post" action="">{% csrf_token %}
@@ -49,6 +50,5 @@
       Tags ammount: {{tags}}
     </span>
   </div>
-{%include "Footer.html"%}
-</body>
-</html>
+
+{% endblock content%}

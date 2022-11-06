@@ -20,7 +20,8 @@ class IndexView(ListView):
 
     def get_queryset(self):
         queryset = super(IndexView,self).get_queryset()
-        return queryset.select_related('teacher').prefetch_related('tags').exclude(teacher__isnull=True)
+
+        return queryset.select_related('teacher').prefetch_related('tags').exclude(teacher__isnull=True).order_by("?")
 
 class CourseByCategoryView(IndexView):
 
@@ -55,6 +56,7 @@ class StudentByCourseView(ListView):
 
     def get_queryset(self):
         queryset = super(StudentByCourseView,self).get_queryset()
+        Course.objects.get(id=self.kwargs["course_id"]).count_students()
         return queryset.filter(course__id=self.kwargs["course_id"])
 
 
