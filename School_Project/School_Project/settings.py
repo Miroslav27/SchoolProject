@@ -9,8 +9,10 @@ https://docs.djangoproject.com/en/4.1/topics/settings/
 For the full list of settings and their values, see
 https://docs.djangoproject.com/en/4.1/ref/settings/
 """
-
+from datetime import timedelta
 from pathlib import Path
+
+from datetime import timedelta
 
 # Build paths inside the project like this: BASE_DIR / 'subdir'.
 BASE_DIR = Path(__file__).resolve().parent.parent
@@ -41,6 +43,7 @@ INSTALLED_APPS = [
     'faker',
     'bootstrap5',
     "debug_toolbar",
+    'django_celery_beat',
 ]
 
 MIDDLEWARE = [
@@ -139,3 +142,28 @@ INTERNAL_IPS = [
 ]
 LOGIN_REDIRECT_URL = "/"
 LOGOUT_REDIRECT_URL = "/"
+
+EMAIL_BACKEND = 'django.core.mail.backends.console.EmailBackend'
+
+
+CELERY_TIME_ZONE = TIME_ZONE
+CELERY_TASK_TRACK_STARTED = True
+CELERY_TASK_TIME_LIMIT = 30 * 60
+CELERY_BEAT_SCHEDULE = {
+    'print-every-30-seconds': {
+        'task': 'journal.tasks.print_debug',
+        'schedule': timedelta(minutes=30),
+        },
+    'spam-every-30-seconds': {
+        'task': 'journal.tasks.send_single_mail',
+        'schedule': timedelta(minutes=60),
+        },
+    'daily_courses_news':{
+        'task': 'journal.tasks.daily_courses_news',
+        'schedule': timedelta(days=1),
+        },
+    'count_course_stat':{
+        'task': 'journal.tasks.count_course_stat',
+        'schedule': timedelta(minutes=2),
+        },
+}

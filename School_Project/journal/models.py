@@ -1,6 +1,6 @@
 from django.db import models
 from django.core.validators import MinValueValidator, EmailValidator, RegexValidator
-
+from journal.tasks import send_single_mail,new_course_notification
 # Create your models here.
 
 class Group(models.Model):
@@ -46,13 +46,18 @@ class Course(models.Model):
     tags = models.ManyToManyField("journal.Tag",blank=True)
     dummy = models.BooleanField(default=False)
     students_count = models.SmallIntegerField(null=True)
-    def __str__(self):
-        return f"{self.name}: {self.category.name} ({self.teacher.surname})"
+    created_at = models.DateTimeField(auto_now_add=True)
 
-    def count_students(self):
-        course = Course.objects.get(id=self.id)
-        course.students_count = len(Student.objects.filter(course__id=self.id))
-        course.save()
+    def __str__(self):
+        return f"{self.name}: {self.category.name} ({self.teacher.surname}) Students:{self.students_count}"
+
+    def save(self, *args, **kwargs):
+        # send email to the students (виникає циклічний імпорт якщо відсилати у тасках, тому запрос студентів виконую тут)
+        if not self.pk:
+            new_course_notification(self.name)
+
+        super(Course, self).save(*args, **kwargs)
+
 
 class Tag(models.Model):
     name = models.CharField(max_length=255)

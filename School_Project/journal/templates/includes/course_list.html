@@ -21,7 +21,7 @@
         </p>
         <a href="#" class="btn btn-primary btn-sm">Записатись!</a>
         <a href={% url "course_edit" course_id=course.id %} class="btn btn-secondary btn-sm">Редагувати</a>
-        <a href={% url "students_by_course" course_id=course.id %} class="btn btn-dark btn-sm">Список Студентів ({{course.students_count}})</a>
+        <a href={% url "students_by_course" course_id=course.id %} class="btn btn-dark btn-sm">Список Студентів <span class="badge bg-secondary">{{course.students_count}}</span></a>
       </div>
     </div>
   </div>

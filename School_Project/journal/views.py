@@ -56,7 +56,6 @@ class StudentByCourseView(ListView):
 
     def get_queryset(self):
         queryset = super(StudentByCourseView,self).get_queryset()
-        Course.objects.get(id=self.kwargs["course_id"]).count_students()
         return queryset.filter(course__id=self.kwargs["course_id"])
 
 
@@ -64,7 +63,8 @@ class CourseCreateView(CreateView):
     template_name = "create_course.html"
     model = Course
     form_class = CourseCreateForm
-    success_url = reverse_lazy("create_course")
+    success_url = reverse_lazy("course_create")
+
 
 class CourseEditView(UpdateView):
     template_name = "create_course.html"
