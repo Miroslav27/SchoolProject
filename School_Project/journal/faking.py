@@ -6,7 +6,8 @@ def add_fake_student(quantity = 1):
     fake=faker.Faker()
     for i in range(quantity):
         try:
-            fake_name,fake_surname = fake.name().split()
+            fullname=fake.name().split()
+            fake_name,fake_surname = fullname[0],fullname[-1]
             fake_email = f"{fake_name.lower().replace(' ','.')}@{fake.domain_name()}"
             fake_age = random.randint(16, random.randint(16, 99))
             fake_group = random.choice(Group.objects.all())
