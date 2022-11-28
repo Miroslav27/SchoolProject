@@ -9,6 +9,7 @@ https://docs.djangoproject.com/en/4.1/topics/settings/
 For the full list of settings and their values, see
 https://docs.djangoproject.com/en/4.1/ref/settings/
 """
+import os
 from datetime import timedelta
 from pathlib import Path
 
@@ -27,7 +28,11 @@ SECRET_KEY = 'django-insecure-_1u$!5#ul%3e1v+n^z6%!#yyf#b$x%zdbvb3v0o$*l3sus0rfn
 # SECURITY WARNING: don't run with debug turned on in production!
 DEBUG = True
 
-ALLOWED_HOSTS = []
+ALLOWED_HOSTS = ["127.0.0.1",
+                 "0.0.0.0",
+'172.19.0.3',
+                 'localhost',
+                 ]
 
 
 # Application definition
@@ -86,8 +91,12 @@ WSGI_APPLICATION = 'School_Project.wsgi.application'
 
 DATABASES = {
     'default': {
-        'ENGINE': 'django.db.backends.sqlite3',
-        'NAME': BASE_DIR / 'db.sqlite3',
+        'ENGINE': 'django.db.backends.mysql',
+        'NAME': 'mysql-db',
+        'USER': 'user',
+        'PASSWORD': 'user',
+        'HOST': 'db',
+        'PORT': 3306,
     }
 }
 
@@ -138,6 +147,8 @@ DEFAULT_AUTO_FIELD = 'django.db.models.BigAutoField'
 INTERNAL_IPS = [
     # ...
     "127.0.0.1",
+    "0.0.0.0",
+'172.19.0.3'
     # ...
 ]
 LOGIN_REDIRECT_URL = "/"
@@ -145,6 +156,7 @@ LOGOUT_REDIRECT_URL = "/"
 
 EMAIL_BACKEND = 'django.core.mail.backends.console.EmailBackend'
 
+CELERY_BROKER_URL='amqp://guest:guest@rabbitmq:5672/'
 
 CELERY_TIME_ZONE = TIME_ZONE
 CELERY_TASK_TRACK_STARTED = True
