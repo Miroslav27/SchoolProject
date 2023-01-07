@@ -14,7 +14,7 @@ class Group(models.Model):
 class Teacher(models.Model):
     firstname = models.CharField(max_length=255)
     surname = models.CharField(max_length=255)
-    title = models.CharField(max_length=255)
+    title = models.CharField(max_length=255, blank=True)
     age = models.PositiveSmallIntegerField()
     email = models.CharField(max_length=255)
     dummy = models.BooleanField(default=False)

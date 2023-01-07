@@ -12,10 +12,13 @@ Django==4.1.1
 django-bootstrap-v5==1.0.11
 django-celery-beat==2.4.0
 django-debug-toolbar==3.7.0
+django-mysql==3.8.1
 django-timezone-field==5.0
+djangorestframework==3.14.0
 Faker==15.0.0
 kombu==5.2.4
 lorem-text==2.1
+mysqlclient==2.1.1
 prompt-toolkit==3.0.32
 python-crontab==2.6.0
 python-dateutil==2.8.2
@@ -27,5 +30,3 @@ timedelta==2020.12.3
 tzdata==2022.4
 vine==5.0.0
 wcwidth==0.2.5
-django-mysql==3.8.1
-mysqlclient==2.1.1

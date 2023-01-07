@@ -9,11 +9,8 @@ https://docs.djangoproject.com/en/4.1/topics/settings/
 For the full list of settings and their values, see
 https://docs.djangoproject.com/en/4.1/ref/settings/
 """
-import os
 from datetime import timedelta
 from pathlib import Path
-
-from datetime import timedelta
 
 # Build paths inside the project like this: BASE_DIR / 'subdir'.
 BASE_DIR = Path(__file__).resolve().parent.parent
@@ -49,6 +46,10 @@ INSTALLED_APPS = [
     'bootstrap5',
     "debug_toolbar",
     'django_celery_beat',
+    "api",
+    'rest_framework',
+    'rest_framework.authtoken',
+
 ]
 
 MIDDLEWARE = [
@@ -154,6 +155,17 @@ INTERNAL_IPS = [
 LOGIN_REDIRECT_URL = "/"
 LOGOUT_REDIRECT_URL = "/"
 
+REST_FRAMEWORK = {
+    'DEFAULT_PERMISSION_CLASSES': [
+        'rest_framework.permissions.IsAuthenticated',
+    ]
+    ,
+    'DEFAULT_AUTHENTICATION_CLASSES': [
+        'rest_framework.authentication.SessionAuthentication',
+        'rest_framework.authentication.TokenAuthentication',
+    ]
+}
+
 EMAIL_BACKEND = 'django.core.mail.backends.console.EmailBackend'
 
 CELERY_BROKER_URL='amqp://guest:guest@rabbitmq:5672/'
@@ -178,4 +190,9 @@ CELERY_BEAT_SCHEDULE = {
         'task': 'journal.tasks.count_course_stat',
         'schedule': timedelta(minutes=2),
         },
+    'issue_daily_token':{
+        'task':'journal.tasks.issue_daily_token',
+        'schedule': timedelta(hours=24),
+        },
 }
+
