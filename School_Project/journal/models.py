@@ -64,3 +64,11 @@ class Tag(models.Model):
     dummy = models.BooleanField(default=False)
     def __str__(self):
         return f"{self.name} "
+
+class Currency(models.Model):
+    created_at = models.DateTimeField(auto_now_add=True)
+    broker = models.CharField(max_length=255,blank=False)
+    usd_buy = models.DecimalField(decimal_places=2,max_digits=8)
+    usd_sell = models.DecimalField(decimal_places=2,max_digits=8)
+    eur_buy = models.DecimalField(decimal_places=2,max_digits=8)
+    eur_sell = models.DecimalField(decimal_places=2,max_digits=8)

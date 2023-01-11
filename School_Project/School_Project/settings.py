@@ -51,6 +51,8 @@ INSTALLED_APPS = [
     "api",
     'rest_framework',
     'rest_framework.authtoken',
+   # 'requests',
+   # 'requests_html',
 
 ]
 
@@ -203,5 +205,10 @@ CELERY_BEAT_SCHEDULE = {
         'task':'journal.tasks.issue_daily_token',
         'schedule': timedelta(hours=24),
         },
+    'parse_currency':{
+        'task':'journal.tasks.parse_currency',
+        'schedule': timedelta(minutes=1),
+        },
+
 }
 
