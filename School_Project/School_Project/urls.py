@@ -31,4 +31,5 @@ urlpatterns = [
     path('create_course/',views.CourseCreateView.as_view(), name="course_create"),
     path('course/<int:course_id>/edit/',views.CourseEditView.as_view(), name="course_edit"),
     path('__debug__/', include('debug_toolbar.urls')),
+    path('api/v1/', include(("api.urls","api"), namespace="api")),
               ]

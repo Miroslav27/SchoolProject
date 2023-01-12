@@ -10,10 +10,15 @@ from journal.models import Student, Group, Teacher, CourseCategory,Course, Tag
 from journal.faking import add_fake_student,add_fake_teacher,delete_all_fakes,add_fake_course,add_fake_tags
 from journal.forms import StudentCreateForm, CourseCreateForm
 
+from django.views.decorators.cache import cache_page
+from django.utils.decorators import method_decorator
 
 # Create your views here.
 
+
+@ method_decorator(cache_page(60,key_prefix="index"),"get")
 class IndexView(ListView):
+
     template_name = "index.html"
     model = Course
     paginate_by = 10
@@ -23,6 +28,7 @@ class IndexView(ListView):
 
         return queryset.select_related('teacher').prefetch_related('tags').exclude(teacher__isnull=True).order_by("?")
 
+@ method_decorator(cache_page(60,key_prefix="course_by_category"),"get")
 class CourseByCategoryView(IndexView):
 
     def get_queryset(self):
@@ -49,6 +55,7 @@ class StudentEditView(UpdateView):
     def get_success_url(self):
         return reverse_lazy("student_edit",args=(self.kwargs['student_id'],))
 
+@ method_decorator(cache_page(60,key_prefix="students_by_course"),"get")
 class StudentByCourseView(ListView):
     template_name = "students_by_course.html"
     model = Student

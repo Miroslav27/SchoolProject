@@ -1,9 +1,9 @@
-from django.core.mail import send_mail
+from django.contrib.auth import get_user_model
 
 from School_Project.celery import app
 from django.core.mail import send_mail
-
-
+from rest_framework.authtoken.models import Token
+import rest_framework
 
 
 #from journal.models import Student
@@ -62,3 +62,11 @@ def count_course_stat():
 
 def create_student():
     pass
+
+@app.task()
+def issue_daily_token():
+    for user in get_user_model().objects.all():
+        user.auth_token.delete()
+        token=Token.objects.get_or_create(user=user)
+        send_single_mail(subject="Your new token for today",message=f"Token:{token} !", address=[user.email,])
+        
