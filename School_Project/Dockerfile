@@ -1,4 +1,4 @@
-FROM python:3.11-buster
+FROM python:3.11.0-buster
 ENV PYTHONUNBUFFERED = 1
 RUN mkdir /app
 WORKDIR /app

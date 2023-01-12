@@ -65,10 +65,15 @@ class Tag(models.Model):
     def __str__(self):
         return f"{self.name} "
 
+
 class Currency(models.Model):
-    created_at = models.DateTimeField(auto_now_add=True)
-    broker = models.CharField(max_length=255,blank=False)
+    created_at = models.DateTimeField()
+    broker = models.CharField(max_length=255)
     usd_buy = models.DecimalField(decimal_places=2,max_digits=8)
     usd_sell = models.DecimalField(decimal_places=2,max_digits=8)
     eur_buy = models.DecimalField(decimal_places=2,max_digits=8)
     eur_sell = models.DecimalField(decimal_places=2,max_digits=8)
+
+    def __str__(self):
+        return f"{self.broker} : ({self.created_at})"
+

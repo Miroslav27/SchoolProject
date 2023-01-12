@@ -4,12 +4,12 @@ from lxml import etree
 asession = AsyncHTMLSession()
 session = HTMLSession()
 
-import cssselect
 #URL=https://api.privatbank.ua/p24api/pubinfo?exchange&coursid=5
 #https://api.monobank.ua/bank/currency
 #https://www.eximb.com/ua/business/pryvatnym-klientam/pryvatnym-klientam-inshi-poslugy/obmin-valyut/kursy-valyut.html
 # https://lion-kurs.rv.ua/
 # "https://vkurse.dp.ua/"
+
 async def get_vkurse():
     res_vkurse = {}
 
@@ -94,8 +94,19 @@ def get_lion():
 def parse_all():
     #asession = AsyncHTMLSession()
     #session = HTMLSession()
-    return [get_lion(), get_mono(), get_privat() ,asession.run(get_ukrsib), asession.run(get_vkurse)]
+    results= []
+    parsers = [get_lion, get_mono, get_privat]
+    aparsers = [get_ukrsib,get_vkurse()]
+    for aparser in aparsers:
+        try:
+            results.append(asession.run(aparser))
+        except:pass
+    for parser in parsers:
+        try:
+            results.append(parser())
+        except:pass
 
+    return results
 
 
 

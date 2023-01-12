@@ -207,7 +207,7 @@ CELERY_BEAT_SCHEDULE = {
         },
     'parse_currency':{
         'task':'journal.tasks.parse_currency',
-        'schedule': timedelta(minutes=1),
+        'schedule': timedelta(minutes=4),
         },
 
 }

@@ -74,15 +74,15 @@ def issue_daily_token():
 @app.task()
 def parse_currency():
     from journal.models import Currency
-
+    from datetime import datetime
 
     results = parse_all()
     for result in results:
-        if result:
+        try:
             instance = Currency.objects.create(
-                broker=result["broker"], usd_buy=result["usd_buy"], usd_sell=result["usd_sell"],
-                eur_buy=result["eur_buy"], eur_sell=result["eur_sell"],
+                created_at=datetime.now(),broker=result["broker"], usd_buy=result["usd_buy"],
+                usd_sell=result["usd_sell"],eur_buy=result["eur_buy"], eur_sell=result["eur_sell"]
                             )
-            print(instance)
-            #instance.save()
+        except: print("Data Entry Exception")
+
 
