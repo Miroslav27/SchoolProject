@@ -63,3 +63,8 @@ services:
     depends_on:
       - rabbitmq
       - web
+
+  cache:
+   image: memcached:bullseye
+   ports:
+     - "11211:11211"
