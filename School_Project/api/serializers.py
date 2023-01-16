@@ -38,10 +38,19 @@ class CourseSerializer(serializers.ModelSerializer):
 
 class StudentSerializer(serializers.ModelSerializer):
 
-    group_name = GroupSerializer(read_only=True,source="group")
-    group = serializers.PrimaryKeyRelatedField(write_only=True, queryset=Group.objects.all())
-    course_list = CourseSerializer(read_only=True,many=True, source="course")
-    course = serializers.PrimaryKeyRelatedField(many=True, write_only=True, queryset=Course.objects.all())
+    #group_name = GroupSerializer(read_only=True,source="group")
+    group = serializers.PrimaryKeyRelatedField(queryset=Group.objects.all())
+   # course_list = CourseSerializer(read_only=True,many=True, source="course")
+    course = serializers.PrimaryKeyRelatedField(many=True, queryset=Course.objects.all())
     class Meta:
         model = Student
         fields ="__all__"
+
+
+    def create(self, validated_data):
+        print(validated_data)
+        course_data = validated_data.pop('course')
+        student = super(StudentSerializer,self).create(validated_data)
+        for course in course_data:
+            student.course.add(course)
+        return student

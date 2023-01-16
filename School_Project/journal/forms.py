@@ -12,6 +12,7 @@ class StudentCreateForm(forms.ModelForm):
         model = Student
         exclude = {"dummy"}
 
+
 class CourseCreateForm(forms.ModelForm):
     tags = forms.ModelMultipleChoiceField(queryset=Tag.objects,widget=forms.CheckboxSelectMultiple(),required=False)
 

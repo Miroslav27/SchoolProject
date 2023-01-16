@@ -45,6 +45,7 @@ class StudentCreateView(FormView):
         form.save()
         return super(StudentCreateView, self).form_valid(StudentCreateForm())
 
+
 class StudentEditView(UpdateView):
     template_name = "create_student.html"
     model = Student

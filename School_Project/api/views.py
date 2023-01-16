@@ -1,7 +1,6 @@
 from django.shortcuts import render
-from rest_framework.permissions import IsAuthenticated
-from rest_framework.response import Response
-from rest_framework.views import APIView
+from rest_framework.permissions import IsAuthenticated, AllowAny
+
 from rest_framework.viewsets import ModelViewSet
 
 from api.serializers import StudentSerializer, GroupSerializer, TeacherSerializer
@@ -35,6 +34,7 @@ class TeacherListView(APIView):
 class StudentsListView(ModelViewSet):
     serializer_class = StudentSerializer
     permission_classes = (IsAuthenticated,)
+
    # queryset = Student.objects.none()
     def get_queryset(self):
         return Student.objects.all()
