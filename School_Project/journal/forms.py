@@ -1,7 +1,7 @@
 from django import forms
 from django.contrib.auth.models import User
 
-from journal.models import Group,Student,CourseCategory, Tag,Teacher,Course
+from journal.models import Group,Student,CourseCategory, Tag,Teacher,Course, Auction
 from django.core.validators import MinValueValidator
 
 from journal.tasks import new_course_notification,send_single_mail
@@ -22,4 +22,10 @@ class CourseCreateForm(forms.ModelForm):
     class Meta:
         model = Course
         exclude = {"dummy"}
+
+class AuctionLotForm(forms.ModelForm):
+
+    class Meta:
+        model = Auction
+        exclude = {"last_bid_user","creator"}
 

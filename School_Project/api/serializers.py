@@ -6,7 +6,7 @@
 """
 
 from rest_framework import serializers
-from journal.models import Student, Group, Course, Tag, Teacher
+from journal.models import Student, Group, Course, Tag, Teacher, Auction
 
 
 
@@ -54,3 +54,8 @@ class StudentSerializer(serializers.ModelSerializer):
         for course in course_data:
             student.course.add(course)
         return student
+
+class AuctionSerializer(serializers.ModelSerializer):
+    class Meta:
+        model = Auction
+        fields ="__all__"
