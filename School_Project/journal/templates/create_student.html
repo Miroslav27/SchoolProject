@@ -1,19 +1,48 @@
 {%extends "Base.html"%}
+{% load static %}
+{% block content %}
 
-{% block content%}
     <div class="container">
         <br>
-            <form action="." method="post"> {%csrf_token%}
-                <table class="table align-middle">
-                    {{ form.as_table }}
+
+            <form action="." method="post">
+                <table class="table align-middle" data-student-id = {{student.id}}  id="student-form">
+
+                    {{ form.as_table }} {% csrf_token %}
                     <tr>
                         <td>
                             <button type="submit" class="btn btn-primary" action="">Зберегти</button>
+
                         </td>
+
                     </tr>
+
                 </table>
             </form>
+         <td>
+                <button class="btn btn-info" id="get-btn" >Показати</button>
+                <label for="id_input">Id:</label> <input type="text" value="{{student.id}}" id="id_input">
+            </td>
+        <br>
+                <td>
+                            <button class="btn btn-danger" id="delete-btn">Видалити</button>
+
+                        </td>
+                        <td>
+                            <button  class="btn btn-success" id="create-btn">Створити</button>
+
+                        </td>
+                    <td>
+                            <button  class="btn btn-warning"  id="update-btn">Редагувати</button>
+
+                        </td>
+
+
         {{success_mes}}
     </div>
 
-{% endblock content%}
+{% endblock content %}
+{% block js %}
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.6.3/jquery.min.js"></script>
+    <script src= "{% static 'js/create_student.js' %}"></script>
+{% endblock js %}

@@ -18,9 +18,11 @@ from django.contrib.auth.views import LoginView, LogoutView
 from django.urls import path, include
 from django.http import request
 from journal import views
+from django.contrib.auth.decorators import login_required
 urlpatterns = [
     path('admin/', admin.site.urls),
     path('login/',LoginView.as_view(template_name="login.html"),name="login"),
+    path('accounts/login/',LoginView.as_view(template_name="login.html"),name="login"),
     path('logout/',LogoutView.as_view(),name="logout"),
     path('', views.IndexView.as_view(), name="home"),
     path('courses_by_cat/<int:category_id>/', views.CourseByCategoryView.as_view(), name="courses_by_cat"),
@@ -32,4 +34,7 @@ urlpatterns = [
     path('course/<int:course_id>/edit/',views.CourseEditView.as_view(), name="course_edit"),
     path('__debug__/', include('debug_toolbar.urls')),
     path('api/v1/', include(("api.urls","api"), namespace="api")),
+    path('auction/',login_required(views.AuctionLobbyView.as_view()), name="auction"),
+    path('auction/<int:lot_id>/',login_required(views.AuctionEditLobbyView.as_view()), name="auction_edit"),
+    path('auction/lot/<int:lot_id>/',login_required(views.AuctionLotView.as_view()), name="auction_lot"),
               ]
