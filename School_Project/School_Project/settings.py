@@ -45,13 +45,15 @@ DEBUG_TOOLBAR_CONFIG = {
 # Application definition
 
 INSTALLED_APPS = [
+    'daphne',
+    'journal',
     'django.contrib.admin',
     'django.contrib.auth',
     'django.contrib.contenttypes',
     'django.contrib.sessions',
     'django.contrib.messages',
     'django.contrib.staticfiles',
-    'journal',
+
     'faker',
     'bootstrap5',
     "debug_toolbar",
@@ -59,10 +61,22 @@ INSTALLED_APPS = [
     "api",
     'rest_framework',
     'rest_framework.authtoken',
+    'channels',
    # 'requests',
    # 'requests_html',
 
 ]
+
+ASGI_APPLICATION = 'School_Project.asgi.application'
+
+CHANNEL_LAYERS = {
+    "default": {
+        "BACKEND": "channels.layers.InMemoryChannelLayer",
+#        "CONFIG": {
+#            "host": [("127.0.0.1", 6379)],
+#        },
+    },
+}
 
 MIDDLEWARE = [
     'django.middleware.security.SecurityMiddleware',

@@ -5,10 +5,10 @@ from django.shortcuts import render, get_object_or_404
 from django.http import HttpResponse,request
 from django.urls import reverse_lazy
 from django.views.generic import TemplateView,View,ListView,DetailView,FormView, CreateView, UpdateView
-from journal.models import Student, Group, Teacher, CourseCategory,Course, Tag
+from journal.models import Student, Group, Teacher, CourseCategory,Course, Tag, Auction
 
 from journal.faking import add_fake_student,add_fake_teacher,delete_all_fakes,add_fake_course,add_fake_tags
-from journal.forms import StudentCreateForm, CourseCreateForm
+from journal.forms import StudentCreateForm, CourseCreateForm, AuctionLotForm
 
 from django.views.decorators.cache import cache_page
 from django.utils.decorators import method_decorator
@@ -83,6 +83,35 @@ class CourseEditView(UpdateView):
     def get_success_url(self):
         return reverse_lazy("course_edit",args=(self.kwargs['course_id'],))
 
+
+class AuctionLobbyView(CreateView):
+    model = Auction
+    template_name = "auction.html"
+    form_class = AuctionLotForm
+    success_url = reverse_lazy("auction")
+    pk_url_kwarg = "lot_id"
+    def get_success_url(self):
+        return reverse_lazy("auction_lot", kwargs={'lot_id': self.object.pk})
+    def form_valid(self, form):
+        form.instance.creator = self.request.user
+        return super(AuctionLobbyView, self).form_valid(form)
+
+
+class AuctionEditLobbyView(UpdateView):
+    model = Auction
+    template_name = "auction.html"
+    form_class = AuctionLotForm
+
+
+
+class AuctionLotView(DetailView):
+    queryset = Auction.objects.all()
+    model = Auction
+    template_name = "auction_lot.html"
+    form_class = AuctionLotForm
+
+    def get_object(self):
+        return self.queryset.filter(pk=self.kwargs["lot_id"])
 
 class CreateFakesView(IndexView):
     template_name = "create_fakes.html"

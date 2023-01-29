@@ -1,3 +1,4 @@
+from django.contrib.auth import get_user_model
 from django.db import models
 from django.core.validators import MinValueValidator, EmailValidator, RegexValidator
 from journal.tasks import send_single_mail,new_course_notification
@@ -76,4 +77,15 @@ class Currency(models.Model):
 
     def __str__(self):
         return f"{self.broker} : ({self.created_at})"
+
+class Auction(models.Model):
+    lot_name = models.CharField(max_length=32,unique=True)
+    creator = models.ForeignKey(get_user_model(),related_name='%(class)s_creator' ,on_delete=models.SET_NULL, null=True)
+    last_bid_value = models.DecimalField(decimal_places=2, max_digits=8, default=1, validators=[MinValueValidator(1)])
+    bid_step_value = models.DecimalField(decimal_places=2, max_digits=8, default=1, validators=[MinValueValidator(0.01)])
+    last_bid_user = models.ForeignKey(get_user_model(),related_name='%(class)s_bidder', on_delete=models.SET_NULL, null=True, blank=True)
+    active = models.BooleanField(default=True)
+
+    def __str__(self):
+        return f"{self.lot_name} : {self.last_bid_value} "
 

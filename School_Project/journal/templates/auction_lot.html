@@ -1,0 +1,45 @@
+{%extends "Base.html"%}
+{% load custom_tags %}
+{% load static %}
+{% block content%}
+<link href="https://gitcdn.github.io/bootstrap-toggle/2.2.2/css/bootstrap-toggle.min.css" rel="stylesheet">
+<input type="hidden" id="user_id" value={{user.id}}>
+<h4 align="center">"Вітаємо {{user.username}}!"</h4>
+
+<body>
+{% csrf_token %}
+{% for lot in object%}
+<td>
+    <label id="lot-name" > Lot:{{ lot.lot_name }} </label><br>
+</td>
+    <textarea id="chat-log" cols="70" rows="15"></textarea><br>
+    <input id="chat-message-input" type="text" size="70"><br>
+    <input class="btn btn-info" id="chat-message-submit" type="button" value="Send">
+
+    <input id="room-name" type="hidden" value = {{lot.id}} >
+
+     <td>
+         {% if user == lot.creator %}
+         {% if lot.active %}
+         <button class="btn btn-danger" data-toggle="button"  id="stop-btn">Stop-Auction</button>
+         {% elif not lot.active %}
+         <button class="btn btn-info" data-toggle="button" id="start-btn">Start-Auction</button>
+         {% endif%}
+         {% endif%}
+     </td>
+
+     <td>
+         <button  class="btn btn-success"  id="bid-value-btn">Bid-Value</button>
+         <input id="bid-value" value = {{ lot.last_bid_value|add:lot.bid_step_value}} >
+         <label id="bid-user" > {{ lot.last_bid_user }} </label>
+    </td>
+
+    {% endfor %}
+</body>
+</html>
+{% endblock content%}
+{% block js%}
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.6.3/jquery.min.js"></script>
+    <script src= "{% static 'js/auction.js' %}"></script>
+
+{% endblock js%}

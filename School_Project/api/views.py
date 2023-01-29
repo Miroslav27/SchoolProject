@@ -3,8 +3,8 @@ from rest_framework.permissions import IsAuthenticated, AllowAny
 
 from rest_framework.viewsets import ModelViewSet
 
-from api.serializers import StudentSerializer, GroupSerializer, TeacherSerializer
-from journal.models import Student, Group, Teacher
+from api.serializers import StudentSerializer, GroupSerializer, TeacherSerializer, AuctionSerializer
+from journal.models import Student, Group, Teacher, Auction
 
 
 # Create your views here.
@@ -54,3 +54,8 @@ class GroupsListView(ModelViewSet):
    # queryset = Group.objects.none
     def get_queryset(self):
         return Group.objects.all()
+
+class AuctionListView(ModelViewSet):
+    serializer_class = AuctionSerializer
+    permission_classes = (IsAuthenticated,)
+    queryset = Auction.objects.all()
