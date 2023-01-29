@@ -3,7 +3,8 @@ from django.contrib.auth import get_user_model
 from School_Project.celery import app
 from django.core.mail import send_mail
 from rest_framework.authtoken.models import Token
-import rest_framework
+from journal.parsers import *
+
 
 
 #from journal.models import Student
@@ -69,4 +70,19 @@ def issue_daily_token():
         user.auth_token.delete()
         token=Token.objects.get_or_create(user=user)
         send_single_mail(subject="Your new token for today",message=f"Token:{token} !", address=[user.email,])
-        
+
+@app.task()
+def parse_currency():
+    from journal.models import Currency
+    from datetime import datetime
+
+    results = parse_all()
+    for result in results:
+        try:
+            instance = Currency.objects.create(
+                created_at=datetime.now(),broker=result["broker"], usd_buy=result["usd_buy"],
+                usd_sell=result["usd_sell"],eur_buy=result["eur_buy"], eur_sell=result["eur_sell"]
+                            )
+        except: print("Data Entry Exception")
+
+

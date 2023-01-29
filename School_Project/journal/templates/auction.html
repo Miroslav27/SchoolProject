@@ -1,0 +1,34 @@
+{%extends "Base.html"%}
+{% load custom_tags %}
+{% block content%}
+<h4 align="center">"Вітаємо {{user.username}}!"</h4>
+ What chat room would you like to enter?<br>
+    <input id="room-name-input" type="text" size="100"><br>
+    <input id="room-name-submit" type="button" value="Enter">
+    <div class="dropdown">
+  <a class="btn btn-secondary dropdown-toggle" href="#" role="button" id="dropdownMenuLink" data-bs-toggle="dropdown" aria-expanded="false">
+    Dropdown link
+  </a>
+
+  <ul class="dropdown-menu" aria-labelledby="dropdownMenuLink">
+      {% for auction in auctions %}
+      <li> <a class="dropdown-item " href={% url 'auction_lot' lot_id=auction.id %} >{{auction}}</a> </li>
+      {% endfor %}
+  </ul>
+</div>
+
+<form action="." method="post">
+                <table class="table align-middle" data-auction-id = {{auction.id}}  id="auction-form">
+
+                    {{ form.as_table }} {% csrf_token %}
+                    <tr>
+                        <td>
+                            <button type="submit" class="btn btn-primary" action="">Зберегти</button>
+
+                        </td>
+
+                    </tr>
+
+                </table>
+            </form>
+{% endblock content%}

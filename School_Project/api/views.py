@@ -1,11 +1,10 @@
 from django.shortcuts import render
-from rest_framework.permissions import IsAuthenticated
-from rest_framework.response import Response
-from rest_framework.views import APIView
+from rest_framework.permissions import IsAuthenticated, AllowAny
+
 from rest_framework.viewsets import ModelViewSet
 
-from api.serializers import StudentSerializer, GroupSerializer, TeacherSerializer
-from journal.models import Student, Group, Teacher
+from api.serializers import StudentSerializer, GroupSerializer, TeacherSerializer, AuctionSerializer
+from journal.models import Student, Group, Teacher, Auction
 
 
 # Create your views here.
@@ -35,6 +34,7 @@ class TeacherListView(APIView):
 class StudentsListView(ModelViewSet):
     serializer_class = StudentSerializer
     permission_classes = (IsAuthenticated,)
+
    # queryset = Student.objects.none()
     def get_queryset(self):
         return Student.objects.all()
@@ -54,3 +54,8 @@ class GroupsListView(ModelViewSet):
    # queryset = Group.objects.none
     def get_queryset(self):
         return Group.objects.all()
+
+class AuctionListView(ModelViewSet):
+    serializer_class = AuctionSerializer
+    permission_classes = (IsAuthenticated,)
+    queryset = Auction.objects.all()

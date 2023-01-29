@@ -38,7 +38,7 @@ services:
       - ~/.docker-conf/rabbitmq/log/:/var/log/rabbitmq
   celery:
     build: .
-    command: celery -A School_Project worker -l info
+    command: celery -A School_Project worker -l INFO
     volumes:
       - ./:/app
     environment: # I have no idea why it should be like this
@@ -50,7 +50,7 @@ services:
       - web
   celery-beat:
     build: .
-    command: celery -A School_Project beat -l info
+    command: celery -A School_Project beat -l INFO
     volumes:
       - ./:/app
     environment:
