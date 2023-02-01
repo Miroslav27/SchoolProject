@@ -1,0 +1,24 @@
+{%extends "Base.html"%}
+{% load custom_tags %}
+{% block content%}
+<h4 align="center">"Вітаємо {{user.username}}!"</h4>
+<h4 align="center">{{ alphanum_list|evennums }}</h4>
+<h4 align="center">{{ "? sad ?"|whyiwedoingthis }}</h4>
+    <h4 align="center">{{ "lorem 5 words should count four" |  wordscount }}</h4>
+
+<div class="row justify-content-center align-items-center  ">
+
+
+
+{% include "includes/course_list.html" %}
+</div>
+{% include "includes/paginator.html" %}
+
+    <div class="row">
+        <h2>Найпопулярніші Курси серед студентів</h2>
+    </div>
+    <div class="row">
+        {% most_popular_courses %}
+    </div>
+
+{% endblock content%}

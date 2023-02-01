@@ -1,0 +1,21 @@
+{%extends "Base.html"%}
+
+{% block content%}
+<h1 align="center">"Student List"</h1>
+<div class="list-group">
+  {%for student in object_list %}
+  <a href={% url "student_edit" student_id=student.id%} class="list-group-item list-group-item-action" aria-current="true">
+    <div class="d-flex w-100 justify-content-between">
+      <h5 class="mb-1">{{student.firstname}} {{student.surname}}</h5>
+      <small>Перейти</small>
+    </div>
+    <p class="mb-1">{{student.age}}</p>
+    <small>{{student.email}}</small>
+  </a>
+  {%endfor%}
+</div>
+
+
+{% include "includes/paginator.html" %}
+
+{% endblock content%}

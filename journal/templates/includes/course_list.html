@@ -1,0 +1,28 @@
+
+  {%for course in object_list %}
+  <div class="w-auto p-2 "  >
+    <div class="card" style="width: 24rem;">
+      <div class="card-body" >
+        <h5 class="card-title">{{course.name}}</h5>
+        <h6 class="card-subtitle mb-2 text-muted">Викладає <a class="card-subtitle mb-2 text-muted" href="#">{{course.teacher.surname}}</a>
+        </h6>
+        <h6>
+        <span class="d-inline-block text-truncate" style="max-width: 250px;">
+          {{course.description}}
+        </span>
+        </h6>
+        <p>
+          {%for tag in course.tags.all%}
+          <a href="#">
+            #{{tag}}</a>
+            {% if not forloop.last%},{% endif%}
+
+          {%endfor%}
+        </p>
+        <a href="#" class="btn btn-primary btn-sm">Записатись!</a>
+        <a href={% url "course_edit" course_id=course.id %} class="btn btn-secondary btn-sm">Редагувати</a>
+        <a href={% url "students_by_course" course_id=course.id %} class="btn btn-dark btn-sm">Список Студентів <span class="badge bg-secondary">{{course.students_count}}</span></a>
+      </div>
+    </div>
+  </div>
+  {%endfor%}
